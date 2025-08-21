@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Heart",
+        "file": "heart.svg"
+    },
+    {
+        "name": "Star",
+        "file": "star.svg"
+    },
+    {
+        "name": "Crown",
+        "file": "crown.svg"
+    },
+    {
+        "name": "Smiley",
+        "file": "smile.svg"
+    },
+    {
+        "name": "Smiley",
+        "file": "wow.svg"
+    }
+]
