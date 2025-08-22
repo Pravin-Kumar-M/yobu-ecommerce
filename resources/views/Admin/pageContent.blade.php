@@ -58,6 +58,113 @@
       </div>
   </section>
   <!-- top section ends -->
+
+  <!-- reports section -->
+  <div class="container mt-5">
+      <h2 class="mb-4 text-center">Reports Dashboard</h2>
+
+      <!-- Report Buttons -->
+      <div class="d-flex flex-wrap justify-content-center mb-4 gap-2">
+          <button class="btn btn-primary report-btn" data-type="weekly">Weekly</button>
+          <button class="btn btn-secondary report-btn" data-type="monthly">Monthly</button>
+          <button class="btn btn-success report-btn" data-type="quarterly">Quarterly</button>
+          <button class="btn btn-warning report-btn text-white" data-type="annually">Annually</button>
+      </div>
+
+      <!-- Custom Report Form -->
+      <form id="customReportForm" class="mb-4">
+          <div class="row g-2 justify-content-center">
+              <div class="col-auto">
+                  <input type="date" name="from_date" class="form-control" required>
+              </div>
+              <div class="col-auto">
+                  <input type="date" name="to_date" class="form-control" required>
+              </div>
+              <div class="col-auto">
+                  <button type="submit" class="btn btn-dark">Custom Report</button>
+              </div>
+          </div>
+      </form>
+
+      <!-- Report Result -->
+      <div id="reportResult" class="card p-4 shadow-sm text-center">
+          <h4 class="text-muted">Select a report to view data.</h4>
+      </div>
+  </div>
+
+  <!-- Optional CSS for nicer look -->
+  <style>
+      .report-btn {
+          min-width: 120px;
+          transition: transform 0.2s, box-shadow 0.2s;
+      }
+
+      .report-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      }
+
+      #reportResult h4 {
+          margin: 0;
+      }
+  </style>
+
+
+
+  <script>
+      let currentReport = null; // keep track of the opened report type
+
+      document.querySelectorAll('.report-btn').forEach(btn => {
+          btn.addEventListener('click', function() {
+              const type = this.dataset.type;
+
+              // Toggle: if same button clicked, hide report
+              if (currentReport === type) {
+                  document.getElementById('reportResult').innerHTML = '<h4>Select a report to view data.</h4>';
+                  currentReport = null;
+              } else {
+                  currentReport = type;
+                  fetchReport(type);
+              }
+          });
+      });
+
+      document.getElementById('customReportForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const formData = new FormData(this);
+          formData.append('type', 'custom');
+
+          currentReport = 'custom'; // mark custom report as current
+          fetchReport('custom', formData);
+      });
+
+      function fetchReport(type, formData = null) {
+          let data = formData ?? new FormData();
+          if (!formData) data.append('type', type);
+
+          fetch("{{ route('admin.fetch') }}", {
+                  method: "POST",
+                  headers: {
+                      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                  },
+                  body: data
+              })
+              .then(res => res.json())
+              .then(data => {
+                  document.getElementById('reportResult').innerHTML = `
+                <h4>📅 Report (${data.from} → ${data.to})</h4>
+                <ul class="list-unstyled mt-3">
+                    <li>Total Orders: <b>${data.ordersCount}</b></li>
+                    <li>Products Sold: <b>${data.productsSold}</b></li>
+                    <li>New User Registrations: <b>${data.userLogins}</b></li>
+                </ul>
+            `;
+              });
+      }
+  </script>
+
+
+  <!-- charts section -->
   <section class="no-padding-bottom">
       <div class="container-fluid">
           <div class="row">
@@ -77,6 +184,9 @@
           </div>
       </div>
   </section>
+  <!-- end of charts section -->
+
+  <!-- stats section -->
   <section class="no-padding-bottom">
       <div class="container-fluid">
           <div class="row">
@@ -123,6 +233,9 @@
           </div>
       </div>
   </section>
+  <!-- end of stats section -->
+
+  <!-- user section -->
   <section class="no-padding-bottom">
       <div class="container-fluid">
           <div class="row">
@@ -228,6 +341,9 @@
           </div>
       </div>
   </section>
+  <!-- end of user section -->
+
+
   <section class="margin-bottom-sm">
       <div class="container-fluid">
           <div class="row d-flex align-items-stretch">
@@ -384,7 +500,7 @@
       <div class="footer__block block no-margin-bottom">
           <div class="container-fluid text-center">
               <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
-              <p class="no-margin-bottom">2018 &copy; Your company. Download From <a target="_blank" href="https://templateshub.net">Templates Hub</a>.</p>
+              <!-- <p class="no-margin-bottom">2018 &copy; Your company. Download From <a target="_blank" href="https://templateshub.net">Templates Hub</a>.</p> -->
           </div>
       </div>
   </footer>

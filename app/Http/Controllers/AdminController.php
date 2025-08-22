@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -285,5 +286,43 @@ class AdminController extends Controller
             ->positionClass('toast-top-center')
             ->success('Order status changed in Delivered');
         return redirect('order_page');
+    }
+
+    // reports 
+    public function fetch(Request $request)
+    {
+        $type = $request->type; // weekly, monthly, quarterly, annually, custom
+        $from = null;
+        $to = Carbon::now();
+
+        if ($type == 'weekly') {
+            $from = Carbon::now()->startOfWeek();
+        } elseif ($type == 'monthly') {
+            $from = Carbon::now()->startOfMonth();
+        } elseif ($type == 'quarterly') {
+            $from = Carbon::now()->subMonths(3)->startOfMonth();
+        } elseif ($type == 'annually') {
+            $from = Carbon::now()->startOfYear();
+        } elseif ($type == 'custom') {
+            $from = Carbon::parse($request->from_date);
+            $to = Carbon::parse($request->to_date);
+        }
+
+        // Orders report
+        $ordersCount = Order::whereBetween('created_at', [$from, $to])->count();
+
+        // Products sold
+        $productsSold = Order::whereBetween('created_at', [$from, $to])->sum('quantity');
+
+        // User logins (just counting new users here, if you track logins in another table adjust it)
+        $userLogins = User::whereBetween('created_at', [$from, $to])->count();
+
+        return response()->json([
+            'ordersCount' => $ordersCount,
+            'productsSold' => $productsSold,
+            'userLogins' => $userLogins,
+            'from' => $from->toDateString(),
+            'to' => $to->toDateString(),
+        ]);
     }
 }

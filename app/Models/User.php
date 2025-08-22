@@ -45,4 +45,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function chatMessages()
+    {
+        return $this->hasMany(\App\Models\ChatMessage::class, 'user_id');
+    }
 }

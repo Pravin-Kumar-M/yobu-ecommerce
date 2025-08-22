@@ -22,9 +22,53 @@
             </ul>
         </li>
         <li><a href="{{url('order_page')}}"> <i class="icon-grid"></i>Orders </a></li>
+        <li>
+            <a href="{{ route('admin.chats') }}">
+                <i class="bi bi-bell-fill"></i> Chat Message
+                @php $c = $adminUnreadChatCount ?? 0; @endphp
+                <span id="chatBadge"
+                    class="badge badge-pill {{ $c ? 'badge-danger' : 'badge-secondary' }} ml-1">
+                    {{ $c }}
+                </span>
+            </a>
+
+        </li>
         <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
         <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
+
+
     </ul>
+
+    <script>
+        function refreshChatBadge() {
+            fetch("{{ url('/admin/chat/unread-count') }}", {
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    }
+                })
+                .then(r => r.json())
+                .then(({
+                    count
+                }) => {
+                    const badge = document.getElementById('chatBadge');
+                    if (!badge) return;
+                    if (count > 0) {
+                        badge.textContent = count;
+                        badge.style.display = '';
+                        badge.classList.remove('badge-secondary');
+                        badge.classList.add('badge-danger');
+                    } else {
+                        badge.textContent = 0;
+                        badge.style.display = 'none';
+                        badge.classList.remove('badge-danger');
+                        badge.classList.add('badge-secondary');
+                    }
+                })
+                .catch(() => {});
+        }
+        setInterval(refreshChatBadge, 10000);
+        document.addEventListener('DOMContentLoaded', refreshChatBadge);
+    </script>
 
 
 </nav>

@@ -25,14 +25,7 @@
 
             @include('Admin.pageContent')
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h3>Welcome to the Admin Dashboard</h3>
-                        <p>Use the sidebar to navigate through different sections.</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <!-- Page Content end-->
 

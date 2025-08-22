@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
@@ -69,6 +70,9 @@ Route::get('delivered/{id}', [AdminController::class, 'delivered'])->middleware(
 
 // view_order
 Route::get('order_page', [AdminController::class, 'order_page'])->middleware(['auth', 'admin'])->name('order_page');
+
+// reports
+Route::post('/admin/reports/fetch', [AdminController::class, 'fetch'])->name('admin.fetch');
 
 
 
@@ -207,3 +211,25 @@ Route::get('notifications', [NotificationController::class, 'notifications'])->n
 // admin notification route
 Route::get('admin/notification/{orderId}', [NotificationController::class, 'admin_notification'])->name('admin_notification');
 Route::get('mark-as-read/{id}', [NotificationController::class, 'mark_as_read'])->name('mark_as_read');
+
+
+
+// << ----------------------------- Chat Message Controller ---------------------------- >>
+
+// user
+Route::middleware('auth')->group(function () {
+    Route::get('/chat/messages', [App\Http\Controllers\ChatController::class, 'index']);
+    Route::post('/chat/messages', [App\Http\Controllers\ChatController::class, 'store']);
+});
+
+// admin
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/chats', [ChatController::class, 'page'])->name('admin.chats');
+
+    // Data APIs
+    Route::get('/admin/chat/threads', [ChatController::class, 'threads']);         // list users + counts
+    Route::get('/admin/chat/{user}', [ChatController::class, 'messages']);         // messages with a user
+    Route::post('/admin/chat/{user}', [ChatController::class, 'send']);            // admin sends message
+    Route::post('/admin/chat/{user}/read', [ChatController::class, 'markRead']);   // mark user's msgs as read
+    Route::get('/admin/chat/unread-count', [ChatController::class, 'unreadCount']); // badge polling
+});
