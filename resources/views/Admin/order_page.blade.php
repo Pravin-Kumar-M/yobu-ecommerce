@@ -32,6 +32,7 @@
                             <th>Product Name</th>
                             <th>Product Image</th>
                             <th>Quantity</th>
+                            <th>Size</th>
                             <th>Total Amount</th>
                             <th>First Name</th>
                             <th>Last Name</th>
@@ -63,6 +64,7 @@
 
                             </td>
                             <td>{{$orders->quantity}}</td>
+                            <td>{{$orders->size}}</td>
                             <td>{{$orders->total_amount}}</td>
                             <td>{{$orders->first_name}}</td>
                             <td>{{$orders->last_name}}</td>

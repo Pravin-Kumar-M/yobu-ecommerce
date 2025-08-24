@@ -22,7 +22,7 @@
             </ul>
         </li>
         <li><a href="{{url('order_page')}}"> <i class="icon-grid"></i>Orders </a></li>
-        <li>
+        <!-- <li>
             <a href="{{ route('admin.chats') }}">
                 <i class="bi bi-bell-fill"></i> Chat Message
                 @php $c = $adminUnreadChatCount ?? 0; @endphp
@@ -32,7 +32,7 @@
                 </span>
             </a>
 
-        </li>
+        </li> -->
         <li><a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a></li>
         <li><a href="forms.html"> <i class="icon-padnote"></i>Forms </a></li>
 

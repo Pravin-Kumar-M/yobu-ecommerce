@@ -98,6 +98,7 @@ class PaymentController extends Controller
             $order->email = session('email');
             $order->user_id = $user_id;
             $order->product_id = $carts->first()->product_id;
+            $order->size = $carts->first()->size;
             $order->custom_image = $carts->first()->custom_image;
             $order->payment_method = session('payment_method');
             $order->payment_status = 'paid';
@@ -247,7 +248,9 @@ class PaymentController extends Controller
                 $order->phone = session('phone');
                 $order->email = session('email');
                 $order->user_id = $user_id;
-                $order->product_id = $carts->first()->product_id; // representative product
+                $order->size = $carts->first()->size;
+                $order->product_id = $carts->first()->product_id;
+                $order->custom_image = $carts->first()->custom_image;
                 $order->payment_method = session('payment_method'); // PayPal
                 $order->payment_status = 'paid';
                 $order->total_amount = $carts->sum(fn($cart) => $cart->product->store_price * $cart->quantity);

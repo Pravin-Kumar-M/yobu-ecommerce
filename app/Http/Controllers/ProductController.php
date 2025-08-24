@@ -21,6 +21,7 @@ class ProductController extends Controller
         $product_id = $id;
         $session_id = Session::getId();
         $quantity = $request->input('quantity', 1);
+        $size = $request->input('size'); // <-- Added size
         $user_id = Auth::check() ? Auth::id() : null;
 
         // Handle custom image (if sent)
@@ -28,13 +29,11 @@ class ProductController extends Controller
         $customImagePath = null;
 
         if (!empty($customImageData)) {
-            // Make sure the directory exists
             $dir = public_path('img/custom_image');
             if (!file_exists($dir)) {
                 mkdir($dir, 0777, true);
             }
 
-            // Clean up and decode base64 image
             $image = str_replace('data:image/png;base64,', '', $customImageData);
             $image = str_replace(' ', '+', $image);
 
@@ -43,12 +42,12 @@ class ProductController extends Controller
 
             file_put_contents($imagePath, base64_decode($image));
 
-            // Store relative path (for easy asset() usage)
             $customImagePath = 'img/custom_image/' . $imageName;
         }
 
-        // Check if product already exists in cart
-        $cartQuery = Cart::where('product_id', $product_id);
+        // Check if product already exists in cart with same size
+        $cartQuery = Cart::where('product_id', $product_id)
+            ->where('size', $size); // <-- Match by size too
 
         if ($user_id) {
             $cartQuery->where('user_id', $user_id);
@@ -64,14 +63,14 @@ class ProductController extends Controller
 
         $cart = $cartQuery->first();
 
-        // Update or create cart entry
         if ($cart) {
             $cart->quantity += $quantity;
         } else {
             $cart = new Cart;
             $cart->product_id = $product_id;
             $cart->quantity = $quantity;
-            $cart->custom_image = $customImagePath; // can be null
+            $cart->size = $size; // <-- Save size
+            $cart->custom_image = $customImagePath;
             $cart->session_id = $session_id;
             $cart->user_id = $user_id;
         }
@@ -83,9 +82,9 @@ class ProductController extends Controller
             ->positionClass('toast-top-center')
             ->addSuccess('Cart added successfully!');
 
-        // Redirect to the cart route, not view file path
         return redirect()->back();
     }
+
 
     // view cart
     public function view_cart()
@@ -286,6 +285,7 @@ class ProductController extends Controller
             $order->email = session('email');
             $order->user_id = $user_id;
             $order->product_id = $cart->product_id;
+            $order->size = $cart->size;
             $order->quantity = $cart->quantity;
             $order->total_amount = $cart->product->store_price * $cart->quantity;
             $order->payment_method = session('payment_method');

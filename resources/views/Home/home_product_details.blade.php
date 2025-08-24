@@ -147,44 +147,6 @@
 
                             <p>{{$products->description}}</p>
 
-                            <div class=" product__details__option">
-                                <hr>
-                                <div class="product__details__option__size">
-                                    <span>Size:</span>
-                                    <label for="xxl">xxl
-                                        <input type="radio" id="xxl">
-                                    </label>
-                                    <label class="active" for="xl">xl
-                                        <input type="radio" id="xl">
-                                    </label>
-                                    <label for="l">l
-                                        <input type="radio" id="l">
-                                    </label>
-                                    <label for="sm">s
-                                        <input type="radio" id="sm">
-                                    </label>
-                                </div>
-                                <hr>
-                                <div class="product__details__option__color">
-                                    <span>Color:</span>
-                                    <label class="c-1" for="sp-1">
-                                        <input type="radio" name="productColor" id="sp-1" onclick="changeOverlayColor('#0b090c')"> <!-- black -->
-                                    </label>
-                                    <label class="c-2" for="sp-2">
-                                        <input type="radio" name="productColor" id="sp-2" onclick="changeOverlayColor('#20315f')"> <!-- Green -->
-                                    </label>
-                                    <label class="c-3" for="sp-3">
-                                        <input type="radio" name="productColor" id="sp-3" onclick="changeOverlayColor('#f1af4d')"> <!-- orange -->
-                                    </label>
-                                    <label class="c-4" for="sp-4">
-                                        <input type="radio" name="productColor" id="sp-4" onclick="changeOverlayColor('#ed1c24')"> <!-- red -->
-                                    </label>
-                                    <label class="c-9" for="sp-9">
-                                        <input type="radio" name="productColor" id="sp-9" onclick="changeOverlayColor('#ffffff')"> <!-- White -->
-                                    </label>
-                                </div>
-
-                            </div>
 
                             <!-- price -->
                             @if($products->original_price)
@@ -206,7 +168,32 @@
                             <form action="{{ url('add_cart', $products->id) }}" method="POST" id="cartForm">
                                 @csrf
                                 <input type="hidden" name="customImage" id="customImageInput">
+                                <input type="hidden" name="product_id" value="{{ $products->id }}">
 
+                                <!-- Size selection -->
+                                <hr>
+                                <div class="product__details__option__size">
+                                    <span>Size:</span>
+
+                                    <label for="xxl" class="active">XXL
+                                        <input type="radio" id="xxl" name="size" value="XXL" required>
+                                    </label>
+                                    <label for="xl">XL
+                                        <input type="radio" id="xl" name="size" value="XL">
+                                    </label>
+                                    <label for="l">L
+                                        <input type="radio" id="l" name="size" value="L">
+                                    </label>
+                                    <label for="m">M
+                                        <input type="radio" id="m" name="size" value="M">
+                                    </label>
+                                    <label for="sm">S
+                                        <input type="radio" id="sm" name="size" value="S">
+                                    </label>
+                                </div>
+                                <hr>
+
+                                <!-- Quantity + Add to Cart -->
                                 <div class="product__details__cart__option">
                                     <div class="quantity">
                                         <div class="pro-qty">
@@ -216,6 +203,7 @@
                                     <button type="submit" class="primary-btn">Add to Cart</button>
                                 </div>
                             </form>
+
 
                             <hr>
 

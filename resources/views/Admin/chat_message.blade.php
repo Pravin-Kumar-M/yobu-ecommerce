@@ -205,10 +205,10 @@
             if (pollTimer) clearInterval(pollTimer);
             pollTimer = setInterval(() => {
                 loadMessages();
-                // keep badge fresh too
                 refreshChatBadge();
                 loadThreads();
             }, 3000);
+
         }
 
         document.getElementById('adminSend').addEventListener('click', () => {
