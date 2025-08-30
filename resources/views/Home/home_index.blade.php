@@ -6,7 +6,7 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-    <!-- <style>
+    <style>
         /* button */
         #chatbot-button {
             position: fixed;
@@ -97,87 +97,7 @@
             padding: 0 15px;
             cursor: pointer;
         }
-    </style> -->
-</head>
 
-<body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
-
-
-    @include ('Home.home_header')
-
-    @include('Home.home_hero_banner')
-
-    @include ('Home.home_product')
-
-    @include('Home.home_blog_sections')
-
-    <!-- forms -->
-    <!-- ===== Floating Actions (Right Sticky) ===== -->
-    <div class="floating-actions" aria-label="Quick actions">
-        <!-- WhatsApp -->
-        <a
-            class="fab fab-whatsapp"
-            href="https://wa.me/917695836103?text=Hi%20Team%2C%20I%20need%20help"
-            target="_blank" rel="noopener"
-            title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
-            <!-- WhatsApp SVG -->
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-                <path fill="currentColor" d="M20.52 3.48A11.91 11.91 0 0 0 12.07.5 11.53 11.53 0 0 0 .5 12.03 11.37 11.37 0 0 0 2.9 18.5L2 23l4.6-1.2a11.63 11.63 0 0 0 5.47 1.39h.01c6.34 0 11.5-5.16 11.51-11.5a11.45 11.45 0 0 0-3.07-8.21Zm-8.45 19.02h-.01a9.7 9.7 0 0 1-4.94-1.35l-.35-.2-2.72.72.73-2.65-.23-.37a9.64 9.64 0 1 1 18.16-4.81 9.67 9.67 0 0 1-9.64 9.66Zm5.31-7.26c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.65.15-.19.29-.75.93-.92 1.12-.17.2-.34.22-.63.08-.29-.15-1.23-.45-2.34-1.44-.86-.77-1.44-1.72-1.6-2.01-.17-.29-.02-.45.13-.6.14-.14.29-.34.44-.51.14-.17.19-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.65-1.56-.89-2.13-.24-.57-.48-.49-.65-.49l-.55-.01c-.2 0-.51.07-.78.37-.26.29-1.02 1-1.02 2.43 0 1.43 1.04 2.81 1.19 3.01.15.2 2.05 3.13 4.98 4.39.7.3 1.25.48 1.68.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.38.24-.68.24-1.26.17-1.38-.07-.12-.26-.2-.55-.35Z" />
-            </svg>
-        </a>
-
-        <!-- Contact Form (opens panel) -->
-        <button class="fab fab-form" id="openContact" title="Open contact form" aria-label="Open contact form">
-            <!-- Form (pencil) SVG -->
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-                <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.41L19.66 2a1 1 0 0 0-1.41 0L16 4.25l3.75 3.75L21 5.75Z" />
-            </svg>
-        </button>
-
-        <!-- Mail -->
-        <a
-            class="fab fab-mail"
-            href="mailto:support@yoursite.com?subject=Support%20Request"
-            title="Send Email" aria-label="Send Email">
-            <!-- Mail SVG -->
-            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
-                <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
-            </svg>
-        </a>
-    </div>
-
-    <!-- ===== Slide-in Contact Panel ===== -->
-    <div class="contact-panel" id="contactPanel" aria-hidden="true">
-        <div class="cp-header">
-            <strong>Contact Us</strong>
-            <button class="cp-close" id="closeContact" aria-label="Close contact form">&times;</button>
-        </div>
-        <form id="contactForm" class="cp-body">
-            <!-- If using Blade, uncomment the next line -->
-            <!-- @csrf -->
-            <div class="cp-field">
-                <label for="cpName">Name</label>
-                <input id="cpName" name="name" type="text" class="cp-input" required>
-            </div>
-            <div class="cp-field">
-                <label for="cpEmail">Email</label>
-                <input id="cpEmail" name="email" type="email" class="cp-input" required>
-            </div>
-            <div class="cp-field">
-                <label for="cpMsg">Message</label>
-                <textarea id="cpMsg" name="message" rows="4" class="cp-input" required></textarea>
-            </div>
-            <button type="submit" class="cp-submit">Send</button>
-        </form>
-    </div>
-
-    <!-- ===== Styles ===== -->
-    <style>
         .floating-actions {
             position: fixed;
             right: 16px;
@@ -310,6 +230,106 @@
             }
         }
     </style>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+
+
+    @include ('Home.home_header')
+
+    @include('Home.home_hero_banner')
+
+    @include ('Home.home_product')
+
+    @include('Home.home_blog_sections')
+
+    <!-- forms -->
+    <!-- ===== Floating Actions (Right Sticky) ===== -->
+    <div class="floating-actions" aria-label="Quick actions">
+        <!-- WhatsApp -->
+        <a
+            class="fab fab-whatsapp"
+            href="https://wa.me/917695836103?text=Hi%20Team%2C%20I%20need%20help"
+            target="_blank" rel="noopener"
+            title="Chat on WhatsApp" aria-label="Chat on WhatsApp">
+            <!-- WhatsApp SVG -->
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path fill="currentColor" d="M20.52 3.48A11.91 11.91 0 0 0 12.07.5 11.53 11.53 0 0 0 .5 12.03 11.37 11.37 0 0 0 2.9 18.5L2 23l4.6-1.2a11.63 11.63 0 0 0 5.47 1.39h.01c6.34 0 11.5-5.16 11.51-11.5a11.45 11.45 0 0 0-3.07-8.21Zm-8.45 19.02h-.01a9.7 9.7 0 0 1-4.94-1.35l-.35-.2-2.72.72.73-2.65-.23-.37a9.64 9.64 0 1 1 18.16-4.81 9.67 9.67 0 0 1-9.64 9.66Zm5.31-7.26c-.29-.15-1.7-.84-1.96-.93-.26-.1-.45-.15-.65.15-.19.29-.75.93-.92 1.12-.17.2-.34.22-.63.08-.29-.15-1.23-.45-2.34-1.44-.86-.77-1.44-1.72-1.6-2.01-.17-.29-.02-.45.13-.6.14-.14.29-.34.44-.51.14-.17.19-.29.29-.49.1-.2.05-.37-.02-.52-.07-.15-.65-1.56-.89-2.13-.24-.57-.48-.49-.65-.49l-.55-.01c-.2 0-.51.07-.78.37-.26.29-1.02 1-1.02 2.43 0 1.43 1.04 2.81 1.19 3.01.15.2 2.05 3.13 4.98 4.39.7.3 1.25.48 1.68.61.7.22 1.34.19 1.84.12.56-.08 1.7-.7 1.94-1.38.24-.68.24-1.26.17-1.38-.07-.12-.26-.2-.55-.35Z" />
+            </svg>
+        </a>
+
+        <!-- Contact Form (opens panel) -->
+        <button class="fab fab-form" id="openContact" title="Open contact form" aria-label="Open contact form">
+            <!-- Form (pencil) SVG -->
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path fill="currentColor" d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25Zm18-11.5a1 1 0 0 0 0-1.41L19.66 2a1 1 0 0 0-1.41 0L16 4.25l3.75 3.75L21 5.75Z" />
+            </svg>
+        </button>
+
+        <!-- Mail -->
+        <a
+            class="fab fab-mail"
+            href="mailto:support@yoursite.com?subject=Support%20Request"
+            title="Send Email" aria-label="Send Email">
+            <!-- Mail SVG -->
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+                <path fill="currentColor" d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 4-8 5L4 8V6l8 5 8-5v2Z" />
+            </svg>
+        </a>
+    </div>
+
+    <!-- ===== Slide-in Contact Panel ===== -->
+    <div class="contact-panel" id="contactPanel" aria-hidden="true">
+        <div class="cp-header">
+            <strong>Contact Us</strong>
+            <button class="cp-close" id="closeContact" aria-label="Close contact form">&times;</button>
+        </div>
+        <form id="contactForm" class="cp-body">
+            <!-- If using Blade, uncomment the next line -->
+            <!-- @csrf -->
+            <div class="cp-field">
+                <label for="cpName">Name</label>
+                <input id="cpName" name="name" type="text" class="cp-input" required>
+            </div>
+            <div class="cp-field">
+                <label for="cpEmail">Email</label>
+                <input id="cpEmail" name="email" type="email" class="cp-input" required>
+            </div>
+            <div class="cp-field">
+                <label for="cpMsg">Message</label>
+                <textarea id="cpMsg" name="message" rows="4" class="cp-input" required></textarea>
+            </div>
+            <button type="submit" class="cp-submit">Send</button>
+        </form>
+    </div>
+
+
+
+    <!-- chat button -->
+
+    <!-- Floating Chat Button -->
+    <div id="chatbot-button">
+        <i class="bi bi-robot"></i>
+    </div>
+
+    <!-- Chat Window -->
+    <div id="chatbot-window">
+        <div class="chat-header">Support</div>
+        <div class="chat-body" id="chat-body">
+            <div class="bot-message">👋 Hi! How can I help you today?</div>
+        </div>
+        <div class="chat-footer">
+            <input type="text" id="chat-input" placeholder="Type a message...">
+            <button id="send-btn">➤</button>
+        </div>
+    </div>
+
+    @include ('Home.home_footer')
 
     <!-- ===== Script (toggle + optional submit) ===== -->
     <script>
@@ -359,30 +379,7 @@
                 this.reset();
             });
         })();
-    </script>
 
-
-
-    <!-- Floating Chat Button -->
-    <!-- <div id="chatbot-button">
-        <i class="bi bi-robot"></i>
-    </div> -->
-
-    <!-- Chat Window -->
-    <!-- <div id="chatbot-window">
-        <div class="chat-header">Support</div>
-        <div class="chat-body" id="chat-body">
-            <div class="bot-message">👋 Hi! How can I help you today?</div>
-        </div>
-        <div class="chat-footer">
-            <input type="text" id="chat-input" placeholder="Type a message...">
-            <button id="send-btn">➤</button>
-        </div>
-    </div> -->
-
-    @include ('Home.home_footer')
-
-    <!-- <script>
         let chatMode = "bot"; // default: bot answers first
 
         // Toggle chat window
@@ -448,12 +445,12 @@
                     sendToAdmin(message);
                     loadMessages();
                 }, 1000);
-            } else {
-                botMsg.textContent = "🤔 I'm not sure about that. Connecting you with an admin...";
-                chatMode = "admin"; // switch to admin
+            } else if (lower.includes("support") || lower.includes("admin") || lower.includes("help")) {
+                botMsg.textContent = "⏳ Connecting you with an admin...";
+                chatMode = "admin";
+
                 setTimeout(() => {
                     sendToAdmin(message);
-                    loadMessages();
                 }, 1000);
             }
 
@@ -470,42 +467,38 @@
                     "X-CSRF-TOKEN": "{{ csrf_token() }}"
                 },
                 body: JSON.stringify({
-                    message: message
+                    message
                 })
-            }).then(() => {
-                loadMessages();
             });
         }
 
         // 📥 Load messages (user + admin)
-        function loadMessages() {
-            if (chatMode === "bot") return; // don't load DB msgs until admin mode
+        let lastId = 0;
 
-            fetch("{{ url('/chat/messages') }}")
+        function loadMessages() {
+            if (chatMode === "bot") return;
+
+            fetch(`/chat/messages?last_id=${lastId}`)
                 .then(res => res.json())
                 .then(messages => {
-                    let chatBody = document.getElementById("chat-body");
-                    chatBody.innerHTML = "";
-
-                    messages.forEach(msg => {
-                        let div = document.createElement("div");
-                        if (msg.sender === "user") {
-                            div.classList.add("user-message");
-                        } else {
-                            div.classList.add("bot-message"); // admin reply
-                        }
-                        div.textContent = msg.message;
-                        chatBody.appendChild(div);
-                    });
-
-                    chatBody.scrollTop = chatBody.scrollHeight;
+                    if (messages.length > 0) {
+                        let chatBody = document.getElementById("chat-body");
+                        messages.forEach(msg => {
+                            let div = document.createElement("div");
+                            div.classList.add(msg.sender === "user" ? "user-message" : "bot-message");
+                            div.textContent = msg.message;
+                            chatBody.appendChild(div);
+                            lastId = msg.id; // update last seen
+                        });
+                        chatBody.scrollTop = chatBody.scrollHeight;
+                    }
                 });
         }
 
+
         // Polling for admin replies
         setInterval(loadMessages, 5000);
-    </script> -->
-
+    </script>
 
 </body>
 

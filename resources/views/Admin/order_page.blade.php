@@ -45,55 +45,73 @@
                             <th>email</th>
                             <th>Payment Method</th>
                             <th>order status</th>
-                            <th>Change status</th>
+                            <th colspan="2">Change status</th>
                         </thead>
 
                         @foreach ($order as $orders)
 
                         <tbody class="text-light">
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{$orders->product->name}}</td>
-                            <td>
-                                @if ($orders->custom_image)
-                                <img src="{{ asset($orders->custom_image) }}" alt="custom_image" class="img-fluid" style="max-width: 100px;">
-                                @elseif ($orders->product && $orders->product->image)
-                                <img src="{{ asset($orders->product->image) }}" alt="product_image" class="img-fluid" style="max-width: 100px;">
-                                @else
-                                <span class="text-danger">No image available</span>
-                                @endif
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $orders->product->name }}</td>
 
-                            </td>
-                            <td>{{$orders->quantity}}</td>
-                            <td>{{$orders->size}}</td>
-                            <td>{{$orders->total_amount}}</td>
-                            <td>{{$orders->first_name}}</td>
-                            <td>{{$orders->last_name}}</td>
-                            <td>{{$orders->country}}</td>
-                            <td>{{$orders->state}}</td>
-                            <td>{{$orders->city}}</td>
-                            <td>{{$orders->address}}</td>
-                            <td>{{$orders->zip_code}}</td>
-                            <td>{{$orders->phone}}</td>
-                            <td>{{$orders->email}}</td>
-                            <td>{{$orders->payment_method}}</td>
-                            <td>
-                                @if($orders->order_status == 'in progress')
-                                <span class="text-danger">{{$orders->order_status}}</span>
-                                @else
-                                <span>{{$orders->order_status}}</span>
-
-                                @endif
-                            </td>
-                            <td class="d-flex" style="gap: 10px;">
-                                <a href="{{url('on_the_way', $orders->id)}}" class="btn btn-primary btn-sm">On the way</a>
-                                <a href="{{url('delivered', $orders->id)}}" class="btn btn-success btn-sm">Delivered</a>
-                            </td>
+                                <td>
+                                    @if ($orders->custom_image)
+                                    <a href="{{ asset($orders->custom_image) }}" target="_blank">
+                                        <img src="{{ asset($orders->custom_image) }}" alt="custom_image" class="img-fluid cursor-pointer" title="View full view to click the image">
+                                    </a>
+                                    @elseif ($orders->product && $orders->product->image)
+                                    <a href="{{ asset($orders->product->image) }}" target="_blank">
+                                        <img src="{{ asset($orders->product->image) }}" alt="product_image" class="img-fluid cursor-pointer" title="View full view to click the image">
+                                    </a>
+                                    @else
+                                    <span class="text-danger">No image available</span>
+                                    @endif
+                                </td>
 
 
+                                <td>{{ $orders->quantity }}</td>
+                                <td>{{ $orders->size }}</td>
+                                <td>{{ $orders->total_amount }}</td>
+                                <td>{{ $orders->first_name }}</td>
+                                <td>{{ $orders->last_name }}</td>
+                                <td>{{ $orders->country }}</td>
+                                <td>{{ $orders->state }}</td>
+                                <td>{{ $orders->city }}</td>
+                                <td>{{ $orders->address }}</td>
+                                <td>{{ $orders->zip_code }}</td>
+                                <td>{{ $orders->phone }}</td>
+                                <td>{{ $orders->email }}</td>
+                                <td>{{ $orders->payment_method }}</td>
+                                <td>
+                                    @if($orders->order_status == 'in progress')
+                                    <span class="text-danger">{{ $orders->order_status }}</span>
+                                    @else
+                                    <span>{{ $orders->order_status }}</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    <a href="{{ url('on_the_way', $orders->id) }}" class="btn btn-primary btn-sm">On the way</a>
+                                </td>
+                                <td>
+                                    <a href="{{ url('delivered', $orders->id) }}" class="btn btn-success btn-sm">Delivered</a>
+                                </td>
+                            </tr>
                         </tbody>
+
 
                         @endforeach
                     </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="d-flex flex-column align-items-center mt-4">
+                    <div class="mb-2">
+                        {{ $order->onEachSide(1)->links() }}
+                    </div>
+                    <div class="text-muted">
+                        Showing {{ $order->firstItem() }} to {{ $order->lastItem() }} of {{ $order->total() }} results
+                    </div>
                 </div>
             </div>
 

@@ -191,6 +191,7 @@
                                         <input type="radio" id="sm" name="size" value="S">
                                     </label>
                                 </div>
+
                                 <hr>
 
                                 <!-- Quantity + Add to Cart -->
@@ -553,6 +554,14 @@
                     .catch(err => console.error(err));
             });
         });
+    });
+
+    document.querySelector("form").addEventListener("submit", function(e) {
+        const selected = document.querySelector('input[name="size"]:checked');
+        if (!selected) {
+            e.preventDefault();
+            alert("Please select a size before continuing.");
+        }
     });
 </script>
 

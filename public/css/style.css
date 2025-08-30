@@ -1692,6 +1692,7 @@ ol {
 	padding: 6px 15px;
 	margin-bottom: 0;
 	margin-right: 5px;
+	background-color: white;
 	cursor: pointer;
 }
 
@@ -1699,11 +1700,15 @@ ol {
 	background: #111111;
 	color: #ffffff;
 	border-color: #111111;
+	box-shadow: 0px 2px 4px black;
 }
 
 .product__details__option__size label input {
 	position: absolute;
-	visibility: hidden;
+	opacity: 0;
+	/* make it invisible */
+	pointer-events: none;
+	/* no mouse clicks directly */
 }
 
 .product__details__option__color {

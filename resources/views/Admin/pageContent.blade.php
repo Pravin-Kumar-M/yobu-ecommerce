@@ -2,55 +2,105 @@
   <section class="no-padding-top no-padding-bottom">
       <div class="container-fluid">
           <div class="row">
+              <!-- user -->
               <div class="col-md-3 col-sm-6">
                   <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                           <div class="title">
                               <div class="icon"><i class="icon-user-1"></i></div><strong>Users Logged In</strong>
                           </div>
-                          <div class="number dashtext-1">{{$users}}</div>
+                          <div class="number dashtext-1">{{ $users }}</div>
                       </div>
                       <div class="progress progress-template">
-                          <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-1"></div>
+                          @php
+                          $maxUsers = 100; // You can change this threshold
+                          $percentage = ($users / $maxUsers) * 100;
+                          if ($percentage > 100) {
+                          $percentage = 100; // prevent overflow
+                          }
+                          @endphp
+                          <div role="progressbar"
+                              style="width: {{ $percentage }}%"
+                              aria-valuenow="{{ $users }}"
+                              aria-valuemin="0"
+                              aria-valuemax="{{ $maxUsers }}"
+                              class="progress-bar progress-bar-template dashbg-1">
+                          </div>
                       </div>
                   </div>
               </div>
+              <!-- product -->
               <div class="col-md-3 col-sm-6">
                   <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                           <div class="title">
                               <div class="icon"><i class="icon-contract"></i></div><strong>Total Products</strong>
                           </div>
-                          <div class="number dashtext-2">{{$products}}</div>
+                          <div class="number dashtext-2">{{ $products }}</div>
                       </div>
                       <div class="progress progress-template">
-                          <div role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-2"></div>
+                          @php
+                          $maxProducts = 100; // adjust max if needed
+                          $productsPercentage = ($products / $maxProducts) * 100;
+                          if ($productsPercentage > 100) $productsPercentage = 100;
+                          @endphp
+                          <div role="progressbar"
+                              style="width: {{ $productsPercentage }}%"
+                              aria-valuenow="{{ $products }}"
+                              aria-valuemin="0"
+                              aria-valuemax="{{ $maxProducts }}"
+                              class="progress-bar progress-bar-template dashbg-2">
+                          </div>
                       </div>
                   </div>
               </div>
+              <!-- order -->
               <div class="col-md-3 col-sm-6">
                   <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                           <div class="title">
                               <div class="icon"><i class="icon-paper-and-pencil"></i></div><strong>Total Orders</strong>
                           </div>
-                          <div class="number dashtext-3">{{$orders}}</div>
+                          <div class="number dashtext-3">{{ $orders }}</div>
                       </div>
                       <div class="progress progress-template">
-                          <div role="progressbar" style="width: 55%" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-3"></div>
+                          @php
+                          $maxOrders = 100;
+                          $ordersPercentage = ($orders / $maxOrders) * 100;
+                          if ($ordersPercentage > 100) $ordersPercentage = 100;
+                          @endphp
+                          <div role="progressbar"
+                              style="width: {{ $ordersPercentage }}%"
+                              aria-valuenow="{{ $orders }}"
+                              aria-valuemin="0"
+                              aria-valuemax="{{ $maxOrders }}"
+                              class="progress-bar progress-bar-template dashbg-3">
+                          </div>
                       </div>
                   </div>
               </div>
+              <!-- delivered -->
               <div class="col-md-3 col-sm-6">
                   <div class="statistic-block block">
                       <div class="progress-details d-flex align-items-end justify-content-between">
                           <div class="title">
                               <div class="icon"><i class="icon-writing-whiteboard"></i></div><strong>Total Delivered</strong>
                           </div>
-                          <div class="number dashtext-4">{{$delivered}}</div>
+                          <div class="number dashtext-4">{{ $delivered }}</div>
                       </div>
                       <div class="progress progress-template">
-                          <div role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100" class="progress-bar progress-bar-template dashbg-4"></div>
+                          @php
+                          $maxDelivered = 100;
+                          $deliveredPercentage = ($delivered / $maxDelivered) * 100;
+                          if ($deliveredPercentage > 100) $deliveredPercentage = 100;
+                          @endphp
+                          <div role="progressbar"
+                              style="width: {{ $deliveredPercentage }}%"
+                              aria-valuenow="{{ $delivered }}"
+                              aria-valuemin="0"
+                              aria-valuemax="{{ $maxDelivered }}"
+                              class="progress-bar progress-bar-template dashbg-4">
+                          </div>
                       </div>
                   </div>
               </div>
@@ -61,27 +111,27 @@
 
   <!-- reports section -->
   <div class="container mt-5">
-      <h2 class="mb-4 text-center">Reports Dashboard</h2>
+      <h2 class="mb-5 text-center">Reports Dashboard</h2>
 
       <!-- Report Buttons -->
-      <div class="d-flex flex-wrap justify-content-center mb-4 gap-2">
-          <button class="btn btn-primary report-btn" data-type="weekly">Weekly</button>
-          <button class="btn btn-secondary report-btn" data-type="monthly">Monthly</button>
-          <button class="btn btn-success report-btn" data-type="quarterly">Quarterly</button>
-          <button class="btn btn-warning report-btn text-white" data-type="annually">Annually</button>
+      <div class="d-flex flex-wrap justify-content-center mb-4" style="gap:15px;">
+          <button class="btn btn-primary report-btn shadow-sm" data-type="weekly">Weekly</button>
+          <button class="btn btn-secondary report-btn shadow-sm" data-type="monthly">Monthly</button>
+          <button class="btn btn-success report-btn shadow-sm" data-type="quarterly">Quarterly</button>
+          <button class="btn btn-warning report-btn text-white shadow-sm" data-type="annually">Annually</button>
       </div>
 
       <!-- Custom Report Form -->
-      <form id="customReportForm" class="mb-4">
-          <div class="row g-2 justify-content-center">
+      <form id="customReportForm" class="mb-5">
+          <div class="row g-3 justify-content-center">
               <div class="col-auto">
-                  <input type="date" name="from_date" class="form-control" required>
+                  <input type="date" name="from_date" class="form-control rounded" required>
               </div>
               <div class="col-auto">
-                  <input type="date" name="to_date" class="form-control" required>
+                  <input type="date" name="to_date" class="form-control rounded" required>
               </div>
               <div class="col-auto">
-                  <button type="submit" class="btn btn-dark">Custom Report</button>
+                  <button type="submit" class="btn btn-light shadow-sm">Custom Report</button>
               </div>
           </div>
       </form>
@@ -92,35 +142,68 @@
       </div>
   </div>
 
-  <!-- Optional CSS for nicer look -->
   <style>
       .report-btn {
-          min-width: 120px;
-          transition: transform 0.2s, box-shadow 0.2s;
+          min-width: 130px;
+          padding: 0.6rem 1rem;
+          font-weight: 500;
+          border-radius: 0.5rem;
+          transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+          cursor: pointer;
       }
 
       .report-btn:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+          transform: translateY(-5px);
+          box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
       }
 
-      #reportResult h4 {
-          margin: 0;
+      #reportResult {
+          min-height: 120px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1rem;
+          border-radius: 0.75rem;
+          transition: all 0.5s ease-in-out;
+      }
+
+      #reportResult.show-result {
+          animation: fadeInUp 0.5s ease forwards;
+          background-color: #343a40;
+          color: #fff;
+      }
+
+      @keyframes fadeInUp {
+          0% {
+              opacity: 0;
+              transform: translateY(20px);
+          }
+
+          100% {
+              opacity: 1;
+              transform: translateY(0);
+          }
+      }
+
+      .table td,
+      .table th {
+          vertical-align: middle;
+      }
+
+      .text-primary-animate {
+          color: #0d6efd;
+          transition: all 1s ease;
       }
   </style>
 
-
-
   <script>
-      let currentReport = null; // keep track of the opened report type
+      let currentReport = null;
 
       document.querySelectorAll('.report-btn').forEach(btn => {
           btn.addEventListener('click', function() {
               const type = this.dataset.type;
-
-              // Toggle: if same button clicked, hide report
               if (currentReport === type) {
-                  document.getElementById('reportResult').innerHTML = '<h4>Select a report to view data.</h4>';
+                  document.getElementById('reportResult').innerHTML = '<h4 class="text-muted">Select a report to view data.</h4>';
                   currentReport = null;
               } else {
                   currentReport = type;
@@ -133,10 +216,21 @@
           e.preventDefault();
           const formData = new FormData(this);
           formData.append('type', 'custom');
-
-          currentReport = 'custom'; // mark custom report as current
+          currentReport = 'custom';
           fetchReport('custom', formData);
       });
+
+      function animateNumber(element, endValue, duration = 1000) {
+          let start = 0;
+          const range = endValue - start;
+          const increment = Math.ceil(range / (duration / 20));
+          const timer = setInterval(() => {
+              start += increment;
+              if (start >= endValue) start = endValue;
+              element.innerText = start;
+              if (start >= endValue) clearInterval(timer);
+          }, 20);
+      }
 
       function fetchReport(type, formData = null) {
           let data = formData ?? new FormData();
@@ -152,16 +246,47 @@
               .then(res => res.json())
               .then(data => {
                   document.getElementById('reportResult').innerHTML = `
-                <h4>📅 Report (${data.from} → ${data.to})</h4>
-                <ul class="list-unstyled mt-3">
-                    <li>Total Orders: <b>${data.ordersCount}</b></li>
-                    <li>Products Sold: <b>${data.productsSold}</b></li>
-                    <li>New User Registrations: <b>${data.userLogins}</b></li>
-                </ul>
+                <h4 class="text-white mb-3 text-primary report-fade">Report (${data.from} → ${data.to})</h4>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped w-50 mx-auto text-white mb-0 report-fade">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Metric</th>
+                                <th class="text-center">Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><b>Total Orders</b></td>
+                                <td class="text-success text-center" id="ordersCount">0</td>
+                            </tr>
+                            <tr>
+                                <td><b>Products Sold</b></td>
+                                <td class="text-success text-center" id="productsSold">0</td>
+                            </tr>
+                            <tr>
+                                <td><b>New User Registrations</b></td>
+                                <td class="text-success text-center" id="userLogins">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             `;
+
+                  document.querySelectorAll('.report-fade').forEach(el => {
+                      el.style.opacity = 0;
+                      el.style.transition = 'opacity 0.5s ease-in-out';
+                      setTimeout(() => el.style.opacity = 1, 50);
+                  });
+
+                  animateNumber(document.getElementById('ordersCount'), data.ordersCount, 1000);
+                  animateNumber(document.getElementById('productsSold'), data.productsSold, 1000);
+                  animateNumber(document.getElementById('userLogins'), data.userLogins, 1000);
               });
       }
   </script>
+
+
 
 
   <!-- charts section -->

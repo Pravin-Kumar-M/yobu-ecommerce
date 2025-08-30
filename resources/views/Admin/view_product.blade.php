@@ -71,8 +71,11 @@
                                                 <td>{{ $product->name }}</td>
                                                 <td>{{ $product->product_code }}</td>
                                                 <td>
-                                                    <img src="{{ asset($product->image) }}" alt="Product Image" width="150" height="150">
+                                                    <a href="{{ asset($product->image) }}" target="_blank">
+                                                        <img src="{{ asset($product->image) }}" alt="Product Image" class="img-fluid cursor-pointer" title="View full view to click the image">
+                                                    </a>
                                                 </td>
+
                                                 <td>{!! Str::words($product->description, 7) !!}</td>
                                                 <td>{{ $product->store_price }}</td>
                                                 <td>{{ $product->original_price }}</td>
@@ -107,6 +110,7 @@
                                         Showing {{ $products->firstItem() }} to {{ $products->lastItem() }} of {{ $products->total() }} results
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>

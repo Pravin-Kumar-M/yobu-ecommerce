@@ -13,18 +13,29 @@ class ChatController extends Controller
 
 
     // fetch chat history
-    public function index()
+    public function index(Request $request)
     {
-        $messages = ChatMessage::where('user_id', Auth::id())->orderBy('created_at', 'asc')->get();
+        $lastId = $request->get('last_id'); // id of last msg on client
+        $query = ChatMessage::where('user_id', Auth::id())
+            ->orderBy('created_at', 'asc');
 
-        // Mark all admin messages as "read by user"
-        ChatMessage::where('user_id', Auth::id())
-            ->where('sender', 'admin')
-            ->whereNull('read_at_user')
-            ->update(['read_at_user' => now()]);
+        if ($lastId) {
+            $query->where('id', '>', $lastId); // only newer
+        }
+
+        $messages = $query->get();
+
+        // mark admin messages as read
+        if ($messages->isNotEmpty()) {
+            ChatMessage::where('user_id', Auth::id())
+                ->where('sender', 'admin')
+                ->whereNull('read_at_user')
+                ->update(['read_at_user' => now()]);
+        }
 
         return response()->json($messages);
     }
+
 
     // store new message
     public function store(Request $request)

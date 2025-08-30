@@ -256,7 +256,7 @@ class AdminController extends Controller
     public function order_page()
     {
 
-        $order = Order::all();
+        $order = Order::paginate(5);
         return view('Admin.order_page', compact('order'));
     }
 
