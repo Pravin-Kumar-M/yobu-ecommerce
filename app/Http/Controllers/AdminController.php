@@ -296,16 +296,16 @@ class AdminController extends Controller
         $to = Carbon::now();
 
         if ($type == 'weekly') {
-            $from = Carbon::now()->startOfWeek();
+            $from = Carbon::now()->subDays(7);
         } elseif ($type == 'monthly') {
-            $from = Carbon::now()->startOfMonth();
+            $from = Carbon::now()->subMonth();
         } elseif ($type == 'quarterly') {
-            $from = Carbon::now()->subMonths(3)->startOfMonth();
+            $from = Carbon::now()->subMonths(3);
         } elseif ($type == 'annually') {
-            $from = Carbon::now()->startOfYear();
+            $from = Carbon::now()->subYear();
         } elseif ($type == 'custom') {
             $from = Carbon::parse($request->from_date);
-            $to = Carbon::parse($request->to_date);
+            $to   = Carbon::parse($request->to_date);
         }
 
         // Orders report
@@ -324,5 +324,17 @@ class AdminController extends Controller
             'from' => $from->toDateString(),
             'to' => $to->toDateString(),
         ]);
+    }
+
+    // charts
+    public function charts_page()
+    {
+        return view('Admin.charts');
+    }
+
+    // forms
+    public function forms_page()
+    {
+        return view('Admin.forms');
     }
 }

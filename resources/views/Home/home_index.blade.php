@@ -41,7 +41,7 @@
             flex-direction: column;
             overflow: hidden;
             font-family: Arial, sans-serif;
-            z-index: 1000;
+            z-index: 5000;
         }
 
         .chat-header {
@@ -220,13 +220,49 @@
             cursor: pointer;
         }
 
-        /* Mobile: move the stack slightly lower so it doesn't collide with nav bars */
-        @media (max-width: 576px) {
+        /* 🔥 Responsive tweaks */
+        @media (max-width: 768px) {
+
+            /* chatbot shrinks */
+            #chatbot-button {
+                width: 48px;
+                height: 48px;
+                font-size: 22px;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            #chatbot-window {
+                width: 260px;
+                height: 340px;
+                bottom: 70px;
+                right: 12px;
+            }
+
+            /* icons shrink + move above chatbot */
             .floating-actions {
                 right: 12px;
+                bottom: 120px;
+                /* stack above chatbot */
                 top: auto;
-                bottom: 18px;
                 transform: none;
+                flex-direction: column;
+                /* horizontal row */
+                gap: 8px;
+            }
+
+            .fab {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #chatbot-window {
+                width: 92%;
+                /* take most of screen */
+                right: 4%;
+                height: 300px;
             }
         }
     </style>
@@ -308,8 +344,6 @@
         </form>
     </div>
 
-
-
     <!-- chat button -->
 
     <!-- Floating Chat Button -->
@@ -333,6 +367,21 @@
 
     <!-- ===== Script (toggle + optional submit) ===== -->
     <script>
+        // Check if user is logged in (Laravel → JS)
+        const isLoggedIn = @json(Auth::check());
+
+        let chatMode = "bot"; // default: bot answers first
+        let lastId = 0; // last loaded message id
+
+        // Toggle chat window
+        document.getElementById("chatbot-button").addEventListener("click", function() {
+            let chatWindow = document.getElementById("chatbot-window");
+            chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
+            if (chatWindow.style.display === "flex") {
+                loadMessages(); // load only if admin mode
+            }
+        });
+        // contact form
         (function() {
             const panel = document.getElementById('contactPanel');
             const openBtn = document.getElementById('openContact');
@@ -380,17 +429,6 @@
             });
         })();
 
-        let chatMode = "bot"; // default: bot answers first
-
-        // Toggle chat window
-        document.getElementById("chatbot-button").addEventListener("click", function() {
-            let chatWindow = document.getElementById("chatbot-window");
-            chatWindow.style.display = (chatWindow.style.display === "flex") ? "none" : "flex";
-            if (chatWindow.style.display === "flex") {
-                loadMessages(); // load only if admin mode
-            }
-        });
-
         // Send message
         document.getElementById("send-btn").addEventListener("click", sendMessage);
         document.getElementById("chat-input").addEventListener("keypress", function(e) {
@@ -404,7 +442,7 @@
 
             let chatBody = document.getElementById("chat-body");
 
-            // Show user msg immediately
+            // Show user message immediately
             let userMsg = document.createElement("div");
             userMsg.classList.add("user-message");
             userMsg.textContent = message;
@@ -423,39 +461,51 @@
         function handleBotReply(message) {
             let lower = message.toLowerCase();
             let chatBody = document.getElementById("chat-body");
-            let botMsg = document.createElement("div");
-            botMsg.classList.add("bot-message");
 
-            if (lower.includes("hi") || lower.includes("hello")) {
-                botMsg.textContent = "Hello 👋 What can I help you with?";
-            } else if (lower.includes("order")) {
-                botMsg.textContent = "📦 You can track your order in 'My Orders'.";
-            } else if (lower.includes("refund")) {
-                botMsg.textContent = "💸 Refunds are processed within 5-7 days.";
-            } else if (lower.includes("payment")) {
-                botMsg.textContent = "💳 We support multiple payment methods including Credit/Debit Cards, UPI, and Wallets.";
-            } else if (lower.includes("customize")) {
-                botMsg.textContent = "🎨 Yes! You can customize your products using our product customizer before checkout.";
-            } else if (lower.includes("support") || lower.includes("admin") || lower.includes("help")) {
-                botMsg.textContent = "⏳ Connecting you with an admin...";
-                chatMode = "admin"; // switch to admin mode
-
-                // Now future messages go to DB
-                setTimeout(() => {
-                    sendToAdmin(message);
-                    loadMessages();
-                }, 1000);
-            } else if (lower.includes("support") || lower.includes("admin") || lower.includes("help")) {
-                botMsg.textContent = "⏳ Connecting you with an admin...";
-                chatMode = "admin";
-
-                setTimeout(() => {
-                    sendToAdmin(message);
-                }, 1000);
-            }
-
-            chatBody.appendChild(botMsg);
+            // Typing indicator
+            let typing = document.createElement("div");
+            typing.classList.add("bot-message");
+            typing.textContent = "Bot is typing...";
+            chatBody.appendChild(typing);
             chatBody.scrollTop = chatBody.scrollHeight;
+
+            setTimeout(() => {
+                typing.remove(); // remove typing before reply
+                let botMsg = document.createElement("div");
+                botMsg.classList.add("bot-message");
+
+                if (lower.includes("hi") || lower.includes("hello")) {
+                    botMsg.textContent = "Hello 👋 What can I help you with?";
+                } else if (lower.includes("order")) {
+                    botMsg.textContent = "📦 You can track your order in 'My Orders'.";
+                } else if (lower.includes("refund")) {
+                    botMsg.textContent = "💸 Refunds are processed within 5-7 days.";
+                } else if (lower.includes("payment")) {
+                    botMsg.textContent = "💳 We support multiple payment methods including Credit/Debit Cards, UPI, and Wallets.";
+                } else if (lower.includes("thank")) {
+                    botMsg.textContent = "🤗 Thank you, Have a great day.";
+                } else if (lower.includes("customize")) {
+                    botMsg.textContent = "🎨 Yes! You can customize your products before checkout.";
+                } else if (lower.includes("support") || lower.includes("admin") || lower.includes("help")) {
+                    if (!isLoggedIn) {
+                        botMsg.textContent = "⚠️ Please log in to connect with an admin.";
+                    } else {
+                        botMsg.textContent = "⏳ Connecting you with an admin...";
+                        chatMode = "admin"; // switch to admin mode
+
+                        // Simulate "admin typing"
+                        setTimeout(() => {
+                            sendToAdmin(message);
+                            loadMessages();
+                        }, 2000);
+                    }
+                } else {
+                    botMsg.textContent = "🤔 Sorry, I didn't understand. Can you please ask about your order or contact an admin?";
+                }
+
+                chatBody.appendChild(botMsg);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 2000); // delay 2s for typing effect
         }
 
         // 📤 Send to DB (Admin mode)
@@ -473,8 +523,6 @@
         }
 
         // 📥 Load messages (user + admin)
-        let lastId = 0;
-
         function loadMessages() {
             if (chatMode === "bot") return;
 
@@ -485,20 +533,38 @@
                         let chatBody = document.getElementById("chat-body");
                         messages.forEach(msg => {
                             let div = document.createElement("div");
-                            div.classList.add(msg.sender === "user" ? "user-message" : "bot-message");
-                            div.textContent = msg.message;
-                            chatBody.appendChild(div);
+
+                            if (msg.sender === "admin") {
+                                // Show admin typing first
+                                let typing = document.createElement("div");
+                                typing.classList.add("bot-message");
+                                typing.textContent = "Admin is typing...";
+                                chatBody.appendChild(typing);
+                                chatBody.scrollTop = chatBody.scrollHeight;
+
+                                setTimeout(() => {
+                                    typing.remove();
+                                    div.classList.add("bot-message");
+                                    div.textContent = msg.message;
+                                    chatBody.appendChild(div);
+                                    chatBody.scrollTop = chatBody.scrollHeight;
+                                }, 2000);
+                            } else {
+                                div.classList.add("user-message");
+                                div.textContent = msg.message;
+                                chatBody.appendChild(div);
+                            }
+
                             lastId = msg.id; // update last seen
                         });
-                        chatBody.scrollTop = chatBody.scrollHeight;
                     }
                 });
         }
 
-
         // Polling for admin replies
         setInterval(loadMessages, 5000);
     </script>
+
 
 </body>
 

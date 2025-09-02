@@ -44,11 +44,11 @@
         </li>
 
         <li class="{{ Request::is('charts') ? 'active' : '' }}">
-            <a href="charts.html"> <i class="fa fa-bar-chart"></i>Charts </a>
+            <a href="{{url('charts_page')}}"> <i class="fa fa-bar-chart"></i>Charts </a>
         </li>
 
         <li class="{{ Request::is('forms') ? 'active' : '' }}">
-            <a href="forms.html"> <i class="icon-padnote"></i>Forms </a>
+            <a href="{{url('forms_page')}}"> <i class="icon-padnote"></i>Forms </a>
         </li>
     </ul>
 

@@ -74,6 +74,13 @@ Route::get('order_page', [AdminController::class, 'order_page'])->middleware(['a
 // reports
 Route::post('/admin/reports/fetch', [AdminController::class, 'fetch'])->name('admin.fetch');
 
+// charts 
+Route::get('charts_page', [AdminController::class, 'charts_page'])->middleware(['auth', 'admin']);
+
+// forms
+Route::get('forms_page', [AdminController::class, 'forms_page'])->middleware(['auth', 'admin']);
+
+
 
 
 
